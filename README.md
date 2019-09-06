@@ -58,9 +58,9 @@ Using:
 * [React.JS](https://reactjs.org/) - Web framework
 * [Node.JS](https://nodejs.org/en/) - Open source server environment
 * [MobX](https://reactjs.org/) - MobX State Management
-* [Typescript](https://www.typescriptlang.org/)
-* [JSS](https://cssinjs.org/) JSS Syntax
-* [Storybook](https://storybook.js.org/) For frontend UI component building
+* [Typescript](https://www.typescriptlang.org/) - Typescript
+* [JSS](https://cssinjs.org/) - JSS Syntax
+* [Storybook](https://storybook.js.org/) - For frontend UI component building
 
 ## Contributing
 
