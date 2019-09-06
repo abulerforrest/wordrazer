@@ -1,0 +1,61 @@
+{
+  "name": "wordrazer-project",
+  "author": "Alexander Bulér Forrest <alexander@buler-forrest.se> (http://alexdev.se)",
+  "homepage": "http://alexdev.se/projects/wordrazer",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@types/jest": "^24.0.18",
+    "@types/node": "^12.7.4",
+    "@types/react": "^16.9.2",
+    "@types/react-dom": "^16.9.0",
+    "@types/react-jss": "^8.6.4",
+    "@types/storybook__addon-knobs": "^5.0.3",
+    "@types/storybook__react": "^4.0.2",
+    "merge-class-names": "^1.2.0",
+    "mobx": "^5.13.0",
+    "mobx-react": "^6.1.3",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-jss": "^8.6.1",
+    "react-scripts": "3.1.1",
+    "typescript": "^3.6.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "storybook": "start-storybook -p 9009 -s public",
+    "build-storybook": "build-storybook -s public",
+    "lint": "eslint --ext .ts --ext .tsx src/components"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@storybook/addon-knobs": "^5.1.11",
+    "@storybook/react": "^5.1.11",
+    "@types/webpack-env": "^1.14.0",
+    "@typescript-eslint/eslint-plugin": "^2.1.0",
+    "@typescript-eslint/parser": "^2.1.0",
+    "eslint": "^6.3.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-react-hooks": "^1.7.0"
+  }
+}
