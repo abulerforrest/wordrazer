@@ -80,5 +80,5 @@ This project is licensed under the GNU AGPLv3 License - see [AGPLv3](https://cho
 
 ## Acknowledgments
 
-* Project is inpired by an 'ancient' Bulletin Board System game from the early 90's which I played when I was young. You needed to race to write complex words which were scrolling by on the sceen. The speed increased as you got more points for each succeded word. The style/color theme is highly inspired by 80's Retrowave/Synthwave.
+* This project is inpired by an 'ancient' Bulletin Board System game from the early 90's which I played when I was young. You needed to race to write complex words which were scrolling by on the sceen. The speed increased as you got more points for each succeded word. The style/color theme is highly inspired by 80's Retrowave/Synthwave. This is my take on it.
 
