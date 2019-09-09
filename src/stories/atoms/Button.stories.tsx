@@ -14,7 +14,7 @@ storiesOf("Atoms", module).add("Button", () => {
 
 	return (
 		<div style={{backgroundColor: containerColor, height: 500}}>
-			<Button title={componentText}/>
+			<Button title={componentText} uppercase bold/>
 		</div>
 	);
 

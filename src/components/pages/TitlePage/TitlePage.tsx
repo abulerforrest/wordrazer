@@ -8,6 +8,8 @@ import { Button } from "../../atoms/Button";
 
 import { ITheme } from "../../../interfaces/Theme";
 import { Typography } from "../../atoms/Typography";
+import { Link } from "../../atoms/Link";
+import { ITitlePageController } from "../../../interfaces/pages/TitlePageController";
 
 const Hiscore = React.lazy(() => import("../../organisms/Hiscore/Hiscore"));
 
@@ -36,8 +38,10 @@ const styles = (theme: ITheme) => ({
 });
 
 export interface ITitlePageProps {
+	controller: ITitlePageController
 	wordOne: string
 	wordTwo: string
+	buttonLabel: string
 	onClick?: (event: React.MouseEvent<HTMLElement>) => void
 }
 
@@ -46,13 +50,22 @@ type TitlePageProps = ITitlePageProps & WithSheet<typeof styles>;
 @observer
 class TitlePage extends React.Component<TitlePageProps> {
 
+	public static defaultProps: Partial<ITitlePageProps> = {
+
+		buttonLabel: "start",
+		onClick: () => {}
+
+	}
+
 	render() : React.ReactNode {
 
 		const {
 			theme,
 			wordOne,
 			wordTwo,
-			classes
+			classes,
+			controller,
+			buttonLabel
 		} = this.props;
 	
 		return (
@@ -66,12 +79,14 @@ class TitlePage extends React.Component<TitlePageProps> {
 					<Hiscore />
 				</Suspense>
 
-				<Button
-					onClick={() => console.log("play")}
-					title="Start"
-					uppercase
-					bold
-				/>
+				<Link href="/init">
+					<Button
+						onClick={() => console.log("play")}
+						title={buttonLabel}
+						uppercase
+						bold
+					/>
+				</Link>
 
 				<Typography
 					fontSize={10}

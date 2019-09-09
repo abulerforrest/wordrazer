@@ -11,7 +11,9 @@ storiesOf("Atoms", module).add("Logo", () => {
 	const componentText2 = text("wordTwo", "RAZER", COMPONENT_GROUP);
 
 	return (
+		<div style={{background: "#000000", minHeight: "800px"}}>
 			<Logo wordOne={componentText1} wordTwo={componentText2}/>
+		</div>
 	);
 
 });

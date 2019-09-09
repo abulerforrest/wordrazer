@@ -4,6 +4,9 @@ import { ITheme } from "../../../interfaces/Theme";
 
 const styles = (theme: ITheme) => ({
 	root: {
+		zIndex: 2,
+		paddingLeft: 20,
+		paddingRight: 20,
 		display: "block",
 		borderRadius: 40,
 		color: "#b002b6",
@@ -11,18 +14,23 @@ const styles = (theme: ITheme) => ({
 		minHeight: 60,
 		fontSize: theme.typography.size.large,
 		letterSpacing: theme.typography.letterSpacing.small,
-		zIndex: 2,
 		border: "none",
 		outline: "none",
-		transition: "all ease 0.4s",
+		backgroundSize: "200% 100%",
+		backgroundPosition: "right bottom",
+		transition: "all 0.2s ease-out",
+		background: "linear-gradient(to right, #F947FB 50%, white 50%)",
 		boxShadow: "inset 0 0 0 0 #31302B",
 
 		"&:hover": {
+			"-webkitTransformStyle": "preserve-3d",
+			"-webkit-backfaceVisibility": "hidden",
 			cursor: "pointer",
 			color: "#FFFFFF",
 			borderRadius: 40,
-			backgroundColor: "",
+			backgroundColor: "#F947FB",
 			border: "4px solid #FFF6FF",
+			backgroundPosition: "left bottom",
 			boxShadow: "inset 194px 0 0 0 #F947FB"
 		}
 	},
