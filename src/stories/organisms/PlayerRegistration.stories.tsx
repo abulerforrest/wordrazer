@@ -1,6 +1,7 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
-import { GamePage } from "../../components/pages/GamePage";
+import { defaultTheme } from "../../themes/theme";
+import { PlayerRegistration } from "../../components/organisms/PlayerRegistration";
 
 import { 
 	GamePageController
@@ -17,11 +18,14 @@ const services : Partial<IServices> = {
 
 const rootStore = new RootStore(services as any);
 
-storiesOf("Pages", module).add("GamePage", () => {
-	const controller = new GamePageController(rootStore);
+storiesOf("Organisms", module).add("PlayerRegistration", () => {
+
+const controller = new GamePageController(rootStore);
 
 	return (
-		<GamePage controller={controller} />
+		<div style={{backgroundImage: defaultTheme.palette.gradient[0], height: 500, padding: 50}}>
+			<PlayerRegistration controller={controller} />
+		</div>
 	);
 
 });

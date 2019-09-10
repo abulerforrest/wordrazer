@@ -4,7 +4,7 @@ import { TitlePage } from "../../components/pages/TitlePage";
 import { Router } from "react-router";
 import { createBrowserHistory } from "history";
 import { text } from "@storybook/addon-knobs";
-import { TitlePageService } from "../../services/TitlePageService";
+import { TitlePageService } from "../services/TitlePageService";
 import { IServices } from "../../services/createServices";
 import { RootStore } from "../../stores/RootStore";
 

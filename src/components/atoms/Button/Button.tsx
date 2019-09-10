@@ -1,6 +1,7 @@
 import * as React from "react";
 import injectSheet, { WithSheet } from "react-jss";
 import { ITheme } from "../../../interfaces/Theme";
+import { ComponentMargin } from "../../../interfaces/Component";
 
 const styles = (theme: ITheme) => ({
 	root: {
@@ -44,9 +45,14 @@ const styles = (theme: ITheme) => ({
 
 });
 
+interface IButtonStyles {
+	margin?: ComponentMargin
+}
+
 export interface IButtonProps {
 	title: string
 	bold?: boolean
+	margin?: ComponentMargin
 	uppercase?: boolean
 
 	onClick?: (event: React.MouseEvent<HTMLElement>) => void
@@ -57,7 +63,7 @@ type ButtonProps = IButtonProps & WithSheet<typeof styles>;
 class Button extends React.Component<ButtonProps> {
 
 	public static defaultProps: Partial<IButtonProps> = {
-
+		margin: 0,
 		bold: false,
 		uppercase: false,
 		onClick: () => {}
@@ -69,10 +75,15 @@ class Button extends React.Component<ButtonProps> {
 		const {
 			title,
 			bold,
+			margin,
 			classes,
 			onClick,
 			uppercase
 		} = this.props;
+
+		const style: IButtonStyles = {
+			margin
+		};
 
 		const hasWeight = bold ? classes.bold : "";
 		const hasTextTransform = uppercase ? classes.uppercase : "";
@@ -85,6 +96,7 @@ class Button extends React.Component<ButtonProps> {
 
 		return (
 			<button
+				style={style}
 				type="button"
 				className={componentClassName}
 				onClick={onClick}

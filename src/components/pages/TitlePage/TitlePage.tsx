@@ -22,8 +22,7 @@ const styles = (theme: ITheme) => ({
 		justifyContent: "center",
 		alignItems: "center",
 		height: "100vh",
-
-		backgroundImage: "linear-gradient(to right top, #150215, #250d26, #361038, #49114b, #5d115e)"
+		backgroundImage: theme.palette.gradient[1]
 	},
 
 	"@keyframes flashing": {
@@ -64,7 +63,6 @@ class TitlePage extends React.Component<TitlePageProps> {
 			wordOne,
 			wordTwo,
 			classes,
-			controller,
 			buttonLabel
 		} = this.props;
 	

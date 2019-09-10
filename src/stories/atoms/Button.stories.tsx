@@ -13,7 +13,7 @@ storiesOf("Atoms", module).add("Button", () => {
 	const containerColor = color("Container backgorund color", defaultTheme.palette.grayscale[7], COMPONENT_GROUP);
 
 	return (
-		<div style={{backgroundColor: containerColor, height: 500}}>
+		<div style={{backgroundColor: containerColor, height: 500, padding: 20}}>
 			<Button title={componentText} uppercase bold/>
 		</div>
 	);

@@ -31,7 +31,7 @@ const styles = (theme: ITheme) => ({
 		alignItems: "center",
 		height: "100vh",
 		animation: "fadeIn ease 0.6s",
-		backgroundImage: "linear-gradient(to right top, #040404, #09080a, #0e0c0f, #120f12, #161215)"
+		backgroundImage: theme.palette.gradient[0]
 	},
 
 	text3D: {
@@ -62,8 +62,7 @@ class GamePage extends React.Component<GamePageProps> {
 
 		const {
 			theme,
-			classes,
-			controller
+			classes
 		} = this.props;
 	
 		return (

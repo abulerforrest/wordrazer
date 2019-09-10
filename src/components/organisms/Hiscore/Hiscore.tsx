@@ -51,9 +51,9 @@ export interface IHiscoreProps {
 
 }
 
-type ButtonProps = IHiscoreProps & WithSheet<typeof styles>;
+type HiscoreProps = IHiscoreProps & WithSheet<typeof styles>;
 
-class Hiscore extends React.Component<ButtonProps> {
+class Hiscore extends React.Component<HiscoreProps> {
 
 	render() : React.ReactNode {
 

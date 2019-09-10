@@ -13,6 +13,7 @@ export interface ITheme {
 		blackSecondary: string
 
 		grayscale: string[]
+		gradient: string[]
 
 	}
 

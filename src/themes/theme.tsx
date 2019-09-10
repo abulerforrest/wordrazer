@@ -23,6 +23,11 @@ export const defaultTheme : ITheme = {
 			"#eeeeee",
 			"#f3f3f3"
 		],
+
+		gradient: [
+			"linear-gradient(to right top, #040404, #09080a, #0e0c0f, #120f12, #161215)",
+			"linear-gradient(to right top, #150215, #250d26, #361038, #49114b, #5d115e)"
+		]
 	},
 
 	typography: {
@@ -34,8 +39,8 @@ export const defaultTheme : ITheme = {
 
 		size: {
 			small: 12,
-			medium: 14,
-			large: 16
+			medium: 17,
+			large: 22
 		},
 		letterSpacing: {
 			small: "1px",
@@ -45,7 +50,7 @@ export const defaultTheme : ITheme = {
 
 	border: {
 		width: 1,
-		radius: 2,
+		radius: 40,
 		color: "#D8D8D8"
 	},
 
