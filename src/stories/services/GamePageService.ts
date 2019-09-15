@@ -2,8 +2,13 @@ import { IGamePageService } from "../../../src/interfaces/services";
 import { IHiscore } from "../../interfaces/Hiscore";
 
 import { delay } from "../../utils/delay";
+import { IWord } from "../../interfaces/Word";
 
 export class GamePageService implements IGamePageService {
+
+	public async fetchWordsFromApi(count: number): Promise<IWord[]> {
+		return [];	
+	}
 
 	public async getUserPlayData(): Promise<IHiscore[]> {
 
@@ -12,7 +17,6 @@ export class GamePageService implements IGamePageService {
 		return [{
 			id: 1,
 			rank: 1,
-			name: "Alex",
 			score: 5000
 		}];
 

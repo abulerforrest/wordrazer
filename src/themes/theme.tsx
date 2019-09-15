@@ -1,27 +1,216 @@
 import { ITheme } from "../interfaces/Theme";
 
 export const defaultTheme : ITheme = {
+	animations: {
+		focusIn: {
+			from: {
+				filter: "blur(12px)",
+				opacity: 0
+			},
+			to: {
+				filter: "blur(0px)",
+				opacity: 1
+			},
+			animation: "focusIn 0.7s cubic-bezier(0.550, 0.085, 0.680, 0.530) both"
+		},
+		fadeIn: {
+			from: {
+				opacity: 0,
+			},
+			to: {
+				opacity: 1
+			},
+			animation: "fadeIn ease 0.8s"
+		},
+		fadeInBlur: {
+			from: {
+				opacity: 0,
+				filter: "blur(10px)"
+			},
+			to: {
+				opacity: 1,
+				filter: "blur(0)"
+			},
+			animation: "fadeInBlur ease 1.8s"
+		},
+		blurExpandFade: {
+			"0": {
+				fontSize: 60,
+				transform: "translateZ(0)",
+				opacity: 1
+			},
+			"60": {
+				opacity: 0.9
+			},
+			"100": {
+				fontSize: 120,
+				filter: "blur(12px)",
+				letterSpacing: "1em",
+				transform: "translateZ(300px)",
+				opacity: 0
+			},
+			animation: "blurExpandFade 2.4s cubic-bezier(0.550, 0.085, 0.680, 0.530) both"
+		},
+		fadeOut: {
+			from: {
+				opacity: 1,
+				filter: "blur(0)"
+			},
+			to: {
+				opacity: 0,
+				filter: "blur(30px)"
+			}
+		},
+		slideTop: {
+			from: {
+				transform: "translateY(0)"
+			},
+			to: {
+				transform: "translateY(-50px)"
+			},
+			animation: "slideTop 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both"
+		},
+		letterFocusExpand1: {
+			from: {
+				letterSpacing: "-0.5em",
+				transform: "translateZ(-800px)",
+				filter: "blur(12px)",
+				opacity: 0,
+				fontSize: 50,
+				textShadow: "0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073"
+			},
+			to: {
+				transform: "translateZ(0)",
+				filter: "blur(0)",
+				opacity: 1,
+				fontSize: 90,
+				textShadow: "0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6"	
+			},
+			animation: "letterFocusExpand1 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940)"
+		},
+		letterFocusExpand2: {
+			from: {
+				letterSpacing: "-0.5em",
+				transform: "translateZ(-800px)",
+				filter: "blur(12px)",
+				opacity: 0,
+				fontSize: 50,
+				textShadow: "0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073"
+			},
+			to: {
+				transform: "translateZ(0)",
+				filter: "blur(0)",
+				opacity: 1,
+				fontSize: 90,
+				textShadow: "0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6"
+			},
+			animation: "letterFocusExpand2 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940)"
+			},
+			vibrations: {
+				"0": {
+					transform: "translate(0)"
+				},
+				"40": {
+					transform: "translate(0px, -0.1px)"
+				},
+				"60": {
+					transform: "translate(0px, 0.5px)"
+				},
+				"80": {
+					transform: "translate(0)",
+					opacity: 0.8
+				},
+				"100": {
+					opacity: 1
+				},
+				animation: "vibrations 0.3s linear infinite both"
+			},
+			vibrations2: {
+				"0": {
+					transform: "translate(0)"
+				},
+				"40": {
+					transform: "translate(0px, -0.5px)"
+				},
+				"60": {
+					transform: "translate(0px, 0.1px)"
+				},
+				"80": {
+					transform: "translate(0)",
+					opacity: 0.8
+				},
+				"100": {
+					opacity: 1
+				},
+				animation: "vibrations2 0.2s linear infinite both"
+			},
+			vibrant: {
+				"0": {
+					transform: "translate(0)"
+				},
+				"20": {
+					transform: "translate(0)"
+				},
+				"40": {
+					transform: "translate(0px, -0.5px)"
+				},
+				"60": {
+					transform: "translate(0px, 0.5px)"
+				},
+				"80": {
+					transform: "translate(0)",
+					color: "white"
+				},
+				"100": {
+					transform: "translate(0)"
+				},
+				animation: "vibrant 0.3s linear infinite both"
+			},
+			shake: {
+				"0": {
+					transform: "translateY(0)",
+					opacity: 0
+				},
+				"60": {
+					transform: "translateY(8px)"
+				},
+				"70": {
+					transform: "translateY(-8px)"
+				},
+				"80": {
+					transform: "translateY(6.4px)"
+				},
+				"90": {
+					transform: "translateY(-6.4px)"
+				},
+				"100": {
+					transform: "translateY(0)",
+					opacity: 1
+				},
+				animation: "shake 1s both"
+			}
+	},
 	palette: {
-		primary: "#585481",
-		primaryLight: "#D1BCE3",
+		primary: "#E731EE",
+		primaryLight: "#B002B6",
 		primaryDark: "#19297C",
 		secondary: "#C49BBB",
 		white: "#FFFFFF",
-		success: "#28A745",
+		success: "#03D7FC",
 		danger: "#DC3545",
 		warning: "#F0AD4E",
-		blackPrimary: "#3b444b",
-		blackSecondary: "#0e1111",
+		blackPrimary: "#3B444B",
+		blackSecondary: "#0E1111",
 
 		grayscale: [
 			"#212121",
 			"#414141",
 			"#616161",
-			"#9e9e9e",
-			"#bdbdbd",
-			"#e0e0e0",
-			"#eeeeee",
-			"#f3f3f3"
+			"#9E9E9E",
+			"#BDBDBD",
+			"#E0E0E0",
+			"#EEEEEE",
+			"#F3F3F3"
 		],
 
 		gradient: [
@@ -40,21 +229,35 @@ export const defaultTheme : ITheme = {
 		size: {
 			small: 12,
 			medium: 17,
-			large: 22
+			mediumSecondary: 20,
+			large: 32,
+			xlarge: 40
 		},
 		letterSpacing: {
 			small: "1px",
 			large: "2px"
-		}
+		},
+		textShadowPrimary: "0 0 10px rgba(230, 0, 115, 0.7), 0 0 20px rgba(230, 0, 115, 0.2), 0 0 30px rgba(230, 0, 115, 0.4), 0 0 40px rgba(230, 0, 115, 0.7), 0 0 30px rgba(230, 0, 115, 0.2), 0 0 30px rgba(230, 0, 115, 0.3), 0 0 40px rgba(230, 0, 115, 0.7)",
+		textShadowSecondary: "0 0 10px rgba(3, 215, 252, 0.7), 0 0 20px rgba(3, 215, 252, 0.2), 0 0 30px rgba(3, 215, 252, 0.4), 0 0 40px rgba(3, 215, 252, 0.7), 0 0 30px rgba(3, 215, 252, 0.2), 0 0 30px rgba(3, 215, 252, 0.3), 0 0 40px rgba(3, 215, 252, 0.7)",
+		textShadowLight: "0 0 5px rgba(3, 215, 252, 0.7), 0 0 5px rgba(3, 215, 252, 0.2), 0 0 10px rgba(3, 215, 252, 0.4), 0 0 20px rgba(3, 215, 252, 0.7), 0 0 10px rgba(3, 215, 252, 0.2), 0 0 5px rgba(3, 215, 252, 0.3), 0 0 5px rgba(3, 215, 252, 0.7)"
 	},
 
 	border: {
-		width: 1,
+		thin: "1px solid",
+		bold: "4px solid",
 		radius: 40,
-		color: "#D8D8D8"
+		color: "#FFFFFF",
+		button: "4px solid #FFF6FF"
 	},
 
-	boxShadow: "0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.08)",
+	cursor: {
+		link: "pointer",
+		disabled: "not-allowed"
+	},
+
+	boxShadowPrimary: "0 0 5px rgba(255, 255, 255, 0.7), 0 0 5px rgba(255, 255, 255, 0.2), 0 0 5px rgba(255, 255, 255, 0.4), 0 0 5px rgba(255, 255, 255, 0.7), 0 0 6px rgba(255, 255, 255, 0.2), 0 0 6px rgba(3, 215, 252, 0.3), 0 0 4px rgba(3, 215, 252, 0.7)",
+	boxShadowButtonPrimary: "inset 0 0 0 0 #31302B",
+	boxShadowButtonSecondary: "inset 194px 0 0 0 #F947FB",
 
 	baseIndex: 10101,
 

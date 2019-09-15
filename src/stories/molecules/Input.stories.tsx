@@ -7,7 +7,8 @@ import { Input } from "../../components/molecules/Input";
 import {
 	text,
 	color,
-	boolean
+	boolean,
+	select
 } from "@storybook/addon-knobs";
 
 const COMPONENT_GROUP = "Input";
@@ -17,6 +18,7 @@ storiesOf("Molecules", module).add("Input", () => {
 	const labelText = text("Label", "Label", COMPONENT_GROUP);
 	const showClear = boolean("Show clearbutton", true, COMPONENT_GROUP);
 	const autoFocus = boolean("Autofocus", true, COMPONENT_GROUP);
+	const inputState = select("State", ["error", "default", "disabled", "success"], "default", COMPONENT_GROUP);
 	
 	const placeholderText = text(
 		"Placeholder text",
@@ -34,6 +36,7 @@ storiesOf("Molecules", module).add("Input", () => {
 		<div style={{backgroundColor: containerColor, height: 500, padding: 20}}>
 			<Input
 				label={labelText}
+				state={inputState}
 				placeholder={placeholderText}
 				showClear={showClear}
 				autoFocus={autoFocus}

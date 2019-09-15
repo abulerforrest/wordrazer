@@ -1,59 +1,71 @@
 import * as React from "react";
 import injectSheet, { WithSheet } from "react-jss";
+
 import { ITheme } from "../../../interfaces/Theme";
 import { ComponentMargin } from "../../../interfaces/Component";
 
 const styles = (theme: ITheme) => ({
 	root: {
 		zIndex: 2,
-		paddingLeft: 20,
-		paddingRight: 20,
-		display: "block",
-		borderRadius: 40,
-		color: "#b002b6",
+		padding: "0 20px 0 20px",
+		borderRadius: theme.border.radius,
+		color: theme.palette.primaryLight,
 		minWidth: 194,
 		minHeight: 60,
-		fontSize: theme.typography.size.large,
+		fontSize: theme.typography.size.mediumSecondary,
 		letterSpacing: theme.typography.letterSpacing.small,
 		border: "none",
 		outline: "none",
-		backgroundSize: "200% 100%",
 		backgroundPosition: "right bottom",
 		transition: "all 0.2s ease-out",
-		background: "linear-gradient(to right, #F947FB 50%, white 50%)",
-		boxShadow: "inset 0 0 0 0 #31302B",
+		boxShadow: theme.boxShadowButtonPrimary,
 
 		"&:hover": {
-			"-webkitTransformStyle": "preserve-3d",
-			"-webkit-backfaceVisibility": "hidden",
 			cursor: "pointer",
-			color: "#FFFFFF",
-			borderRadius: 40,
-			backgroundColor: "#F947FB",
-			border: "4px solid #FFF6FF",
+			color: theme.palette.white,
+			borderRadius: theme.border.radius,
+			border: theme.border.button,
 			backgroundPosition: "left bottom",
-			boxShadow: "inset 194px 0 0 0 #F947FB"
+			boxShadow: theme.boxShadowButtonSecondary
 		}
+	},
+
+	successState: {
+		cursor: "pointer",
+		color: theme.palette.white,
+		borderRadius: theme.border.radius,
+		border: theme.border.button,
+		backgroundPosition: "left bottom",
+		boxShadow: theme.boxShadowButtonSecondary
 	},
 
 	bold: {
 		fontWeight: "bold"
 	},
+
 	uppercase: {
 		textTransform: "uppercase"
-	}
+	},
 
+	disabledState: {
+		opacity: theme.disabledOpacity,
+		cursor: theme.cursor.disabled,
+		userSelect: "none"
+	}
 });
+
+export type ButtonState = "default" | "success" | "loading" | "error" | "disabled";
 
 interface IButtonStyles {
 	margin?: ComponentMargin
 }
 
 export interface IButtonProps {
-	title: string
 	bold?: boolean
-	margin?: ComponentMargin
 	uppercase?: boolean
+	title: string
+	state?: ButtonState
+	margin?: ComponentMargin
 
 	onClick?: (event: React.MouseEvent<HTMLElement>) => void
 }
@@ -67,14 +79,14 @@ class Button extends React.Component<ButtonProps> {
 		bold: false,
 		uppercase: false,
 		onClick: () => {}
-
 	}
 
 	render() : React.ReactNode {
 
 		const {
-			title,
 			bold,
+			title,
+			state,
 			margin,
 			classes,
 			onClick,
@@ -87,10 +99,14 @@ class Button extends React.Component<ButtonProps> {
 
 		const hasWeight = bold ? classes.bold : "";
 		const hasTextTransform = uppercase ? classes.uppercase : "";
+		const hasSuccess = state === "success" ? classes.successState : "";
+		const hasDisabled = state === "disabled" ? classes.disabledState : "";
 
 		const componentClassName = `
 			${classes.root}
 			${hasWeight}
+			${hasSuccess}
+			${hasDisabled}
 			${hasTextTransform}
 		`;
 
