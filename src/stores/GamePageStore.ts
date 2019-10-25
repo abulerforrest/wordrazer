@@ -2,6 +2,7 @@ import { RootStore } from "./RootStore";
 import { observable, ObservableMap, action } from "mobx";
 import { WordsModel } from "../models/WordsModel";
 import { IWord } from "../interfaces/Word";
+import { workerData } from "worker_threads";
 
 type WordsMap = ObservableMap<IWord, WordsModel>
 
@@ -17,24 +18,20 @@ export class GamePageStore {
 	@action
 	public async fetchWordsFromApi(count: number) : Promise<void> {
 
-		const words: IWord[] = await this.rootStore.services
+		const words: any[] = await this.rootStore.services
 		.gamePageService.fetchWordsFromApi(count);
 
-		console.log(words)
+		for(const word in words) {
 
-		words.forEach((word, index) => {
+			const wordsModel = new WordsModel(words[word]);
+			
+			this.words.set(words[word], wordsModel);
 
-			const wordsModel = new WordsModel(word, index);
-
-//			console.log(wordsModel)
-
-			this.words.set(word, wordsModel);
-		});
-
+		}
 	}
 
+	@action
 	public getWords() : IterableIterator<WordsModel> {
-		console.log(this.words)
 		return this.words.values();
 	}
 

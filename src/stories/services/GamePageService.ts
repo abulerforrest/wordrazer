@@ -16,8 +16,7 @@ export class GamePageService implements IGamePageService {
 
 		return [{
 			id: 1,
-			rank: 1,
-			score: 5000
+			rank: 1
 		}];
 
 	}

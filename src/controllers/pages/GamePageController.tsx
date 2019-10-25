@@ -2,10 +2,12 @@ import {
 	action,
 	autorun,
 	computed, 
-	observable
+	observable,
+	IObservableArray,
+	observe
 } from "mobx";
 
-import { createViewModel } from "mobx-utils";
+import { createViewModel, ViewModel } from "mobx-utils";
 import { PlayerModel } from "../../models/PlayerModel";
 
 import { RootStore } from "../../stores/RootStore";
@@ -15,26 +17,39 @@ import {
 	IGamePageController
 } from "../../interfaces/pages/GamePageController";
 
-export class GamePageController
+import { WordController } from "../gamelogic/WordController";
+import { WordsModel } from "../../models/WordsModel";
+import { IWordController } from "../../interfaces/gamelogic";
+import { controlledChars } from "../../utils/keyCodes";
+import { ThreeJSController } from "../3Dengine/ThreeJSController";
+import { IThreeJSController } from "../../interfaces/3Dengine/ThreeJSController";
+
+
+
+export class GamePageController extends ThreeJSController
 	implements IGamePageController {
 
 	private readonly rootStore: RootStore;
 	private readonly store: GamePageStore;
-
-	@observable public loading: boolean = false;
+	private readonly threeJSController: IThreeJSController;
 
 	@observable private model: PlayerModel;
-
+	@observable private allWordControllers: IObservableArray<IWordController> = observable([]);
+	@observable public activeWordController: IWordController = [];
+	
+	@observable public loading: boolean = false;
+	
 	@observable private minNameLength: number = 2;
 	@observable private maxNameLength: number = 30;
 	@observable public countDownNumber: number = 0;
 
-	@observable public textInput: string = "";
+	@observable public keyInput: string = "";
 	@observable public gameCurrentTime: string = "";
+	@observable public currentTextInput: string = "";
 	
 	@observable public timer: any = null;
 	@observable public errorMessages: any = null;
-	@observable public viewModel: any = null;
+	@observable public viewModel: ViewModel<PlayerModel>;
 	@observable public gameStartedTime: any = new Date();
 	
 	@observable public gameIsOngoing: boolean = false;
@@ -42,8 +57,11 @@ export class GamePageController
 	@observable public runBackgroundAnim: boolean = false;
 	@observable public showPlayerRegistration: boolean = true;
 	
-	constructor(rootStore: RootStore) {
+	constructor(rootStore: RootStore, threeJSController: IThreeJSController) {
+		super();
+
 		this.rootStore = rootStore;
+		this.threeJSController = threeJSController;
 
 		this.store = rootStore.gamePageStore;
 
@@ -64,22 +82,22 @@ export class GamePageController
 	}
 
 	@computed get showInputClearIcon() : boolean {
-		return this.viewModel.name;
+		return this.viewModel.model.name !== "";
 	}
 
 	@computed get validateMinTextLength() : boolean {
-		const name = this.viewModel.name;
+		const name = this.viewModel.model.name;
 		return name.length < this.minNameLength && name.length > 0;
 	}
 
 	@computed get validateMaxTextLength() : boolean {
-		const name = this.viewModel.name;
+		const name = this.viewModel.model.name;
 		return name.length < this.maxNameLength;
 	}
 
 	@computed get validateLetterNumberOnly() : boolean {
 		const letterNumberOnly = /^([a-zA-Z0-9åäöÅÄÖ!_]+\s)*[a-zA-Z0-9åäöÅÄÖ!_]+$/;
-		const name = this.viewModel.name;
+		const name = this.viewModel.model.name;
 
 		return !name.match(letterNumberOnly) && name.length > 0;
 	}
@@ -88,7 +106,7 @@ export class GamePageController
 		return this.validateMaxTextLength
 			&& !this.validateMinTextLength
 			&& !this.validateLetterNumberOnly
-			&& this.viewModel.name.length !== 0;
+			&& this.viewModel.model.name.length !== 0;
 	}
 
 	@computed get inputState() : string {
@@ -97,13 +115,17 @@ export class GamePageController
 		} 
 		else if(!this.validateMinTextLength
 			&& !this.validateLetterNumberOnly
-			&& this.viewModel.name.length >= this.minNameLength
+			&& this.viewModel.model.name.length >= this.minNameLength
 		) {
 			return "success";
 		}
 		else {
 			return "default";
 		}
+	}
+
+	@computed get getWords() : IWordController {
+		return [];
 	}
 
 	@computed get textValidateMessage() : string {
@@ -124,15 +146,21 @@ export class GamePageController
 	private async load() : Promise<void> {
 		this.loading = true;
 
-		// Side effects
+		// side effects
 		autorun(
 			() => {
-				// init Timer
+				// init timer
 				if(this.showTimer === true) {
 					this.initTimer();
-					this.toggleBackgroundAnim();
 				}
-				// if game has ended reset timer and stop background anim...
+				if(this.gameHasStarted === true) {
+					// draw to the canvas
+					this.threeJSController.draw();
+				}
+				if(this.gameHasStarted && this.countDownNumber === 0) {
+					// start game animation
+					this.threeJSController.startGameAnimation(0.0002);
+				}				
 
 			}
 		);
@@ -141,10 +169,17 @@ export class GamePageController
 
 			await this.store.fetchWordsFromApi(1000);
 
-			const wordRowControllers: any[] = [];
+			this.store.getWords();
 
-			console.log(this.store.getWords())
+			const wordControllers: IWordController[] = [];
 
+			for(const model of this.store.getWords()) {
+				const rowController = this.createWordController(model);
+				wordControllers.push(rowController);
+			}
+
+			this.allWordControllers.replace(wordControllers);
+			
 		}
 		catch(error) {
 
@@ -152,6 +187,14 @@ export class GamePageController
 		finally {
 			this.loading = false;
 		}
+	}
+
+	private createWordController(model: WordsModel) : IWordController {
+		return new WordController(
+			this.rootStore,
+			this,
+			model
+		);
 	}
 
 	@action toggleBackgroundAnim() : void {
@@ -188,7 +231,14 @@ export class GamePageController
 
 	@action
 	public onKeyboardInput(event: KeyboardEvent): void {
-		this.textInput = event.key;
+
+		// if the keyCode is not a letter
+		if(!controlledChars().includes(event.keyCode)) {
+			this.currentTextInput = this.currentTextInput + event.key;
+		}
+		// update current key
+		this.keyInput = event.key;
+
 	}
 
 	@action
@@ -199,18 +249,19 @@ export class GamePageController
 	@action
 	public startGame() : void {
 		this.toggleShowPlayerRegistration();
+		this.viewModel.submit();
 		this.countDownTimer(3);
 		this.gameHasStarted = true;
 	}
 
 	@action
 	public onInputKeypress(value: string) : void {
-		this.viewModel.name = value;
+		this.viewModel.model.name = value;
 	}
 
 	@action
 	public clearInput(type: string) : void {
-		this.viewModel[type] = "";
+		this.viewModel.reset();
 	}
 
 	@action

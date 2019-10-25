@@ -11,8 +11,7 @@ export class TitlePageService implements ITitlePageService {
 
 		return [{
 			id: 1,
-			rank: 1,
-			score: 5000
+			rank: 1
 		}];
 
 	}

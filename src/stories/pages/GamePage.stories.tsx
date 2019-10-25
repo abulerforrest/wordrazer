@@ -10,6 +10,7 @@ import { IServices } from "../../services/createServices";
 
 import { GamePageService } from "../services/GamePageService";
 import { RootStore } from "../../stores/RootStore";
+import { ThreeJSController } from "../../controllers/3Dengine/ThreeJSController";
 
 const services : Partial<IServices> = {
 	gamePageService: new GamePageService()
@@ -18,7 +19,7 @@ const services : Partial<IServices> = {
 const rootStore = new RootStore(services as any);
 
 storiesOf("Pages", module).add("GamePage", () => {
-	const controller = new GamePageController(rootStore);
+	const controller = new GamePageController(rootStore, new ThreeJSController());
 
 	return (
 		<GamePage controller={controller} />

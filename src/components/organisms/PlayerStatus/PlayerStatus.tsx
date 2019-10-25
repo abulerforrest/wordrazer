@@ -49,10 +49,16 @@ const styles = (theme: ITheme) => ({
 	},
 
 	label: {
-		display: "flex",
+		overflow: "hidden",
+		textOverflow: "ellipsis",
+		margin: "-25px 0px -25px -25px",
+		padding: "25px 25px 25px 25px",
+		paddingRight: "25px",
+		display: "block",
+		maxWidth: 280,
 		fontSize: 35,
 		fontFamily: theme.typography.hiscorePrimary,
-		letterSpacing: theme.typography.letterSpacing.small
+		letterSpacing: theme.typography.letterSpacing.small,
 	},
 
 	user: {
@@ -86,13 +92,13 @@ class PlayerStatus extends React.Component<PlayerStatusProps> {
 		} = this.props;
 
 		const scoreLabelClasses = `
-		${classes.score}
-		${classes.label}
+			${classes.score}
+			${classes.label}
 		`;
 
 		const userLabelClasses = `
-		${classes.user}
-		${classes.label}
+			${classes.user}
+			${classes.label}
 		`;
 
 		return (
@@ -105,7 +111,7 @@ class PlayerStatus extends React.Component<PlayerStatusProps> {
 				>
 					Level
 					<span className={scoreLabelClasses}>
-						6
+						{controller.viewModel.model.level}
 					</span>
 				</Typography>
 				<Typography
@@ -114,9 +120,9 @@ class PlayerStatus extends React.Component<PlayerStatusProps> {
 					uppercase
 					bold
 				>
-					Lifes
+					Lives
 					<span className={scoreLabelClasses}>
-						5
+						{controller.viewModel.model.lives}
 					</span>
 				</Typography>
 				<Typography
@@ -127,7 +133,7 @@ class PlayerStatus extends React.Component<PlayerStatusProps> {
 				>
 					Score
 					<span className={scoreLabelClasses}>
-						100102P
+						{controller.viewModel.model.score}
 					</span>
 				</Typography>
 				<Typography
@@ -138,7 +144,7 @@ class PlayerStatus extends React.Component<PlayerStatusProps> {
 				>
 					Username
 					<span className={userLabelClasses}>
-						Emanuellllll1232
+						{controller.viewModel.model.name}
 					</span>
 				</Typography>
 				<div>
@@ -151,9 +157,9 @@ class PlayerStatus extends React.Component<PlayerStatusProps> {
 						Key input
 					</Typography>
 					<Letter
-						onKeyDown={(event: KeyboardEvent) => controller.onKeyboardInput(event)}
-						textInput={controller.textInput}
+						textInput={controller.keyInput}
 						showLetter={controller.countDownNumber === 0 && controller.gameHasStarted}
+						onKeyDown={(event: KeyboardEvent) => controller.onKeyboardInput(event)}
 					/>
 				</div>
 				<div className={classes.timePosition}>

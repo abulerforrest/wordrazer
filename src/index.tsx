@@ -15,6 +15,7 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 import { GamePage } from './components/pages/GamePage';
 import { GamePageController } from './controllers/pages/GamePageController';
+import { ThreeJSController } from './controllers/3Dengine/ThreeJSController';
 import { RootStore } from './stores/RootStore';
 import { GamePageService } from './services/GamePageService';
 import { IServices } from './services/createServices';
@@ -25,7 +26,8 @@ const services : Partial<IServices> = {
 
 const rootStore = new RootStore(services as IServices);
 
-const gamePageController = new GamePageController(rootStore);
+const threeJSController = new ThreeJSController();
+const gamePageController = new GamePageController(rootStore, threeJSController);
 
 const styles = (theme: ITheme) => ({
 	root: {
@@ -37,7 +39,7 @@ const styledApp = (Component: any) => {
 
 	const WrappedClass = ({ classes }: any) => (
 		<div className={classes.root}>
-			<Component controller={gamePageController} />
+			<Component threeJSController={threeJSController} controller={gamePageController} />
 		</div>
 	);
 	

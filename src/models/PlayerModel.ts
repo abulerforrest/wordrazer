@@ -5,15 +5,19 @@ import {
 
 import { Model } from "./Model";
 import { IPlayer } from "../interfaces/Player";
-import { IHiscore } from "../interfaces/Hiscore";
 
-export type PlayerModelPartial = Model<IPlayer, "name" | "hiscore">;
+export type PlayerModelPartial = Model<IPlayer, "name" | "level" | "lives" | "gameTime" | "score">;
 
 export class PlayerModel implements PlayerModelPartial {
 
 	@observable public id: number = null!;
 	@observable public name: string = "";
-	@observable public hiscore: IHiscore = null!;
+	@observable public gameTime?: Date;
+	@observable public level?: Number = 0;
+	@observable public lives?: Number = 0;
+	@observable public score?: Number = 0;
+	public localValues!: any;
+	public localComputedValues: any;
 	
 	constructor(player?: Partial<IPlayer>) {
 		this.fromJson(player!)
@@ -25,7 +29,10 @@ export class PlayerModel implements PlayerModelPartial {
 		if(player) {
 			this.id = player.id!;
 			this.name = player.name!;
-			this.hiscore = player.hiscore!;
+			this.level = player.level!;
+			this.lives = player.lives!;
+			this.score = player.score!;
+			this.gameTime = player.gameTime!;
 		}
 
 	}
@@ -34,7 +41,10 @@ export class PlayerModel implements PlayerModelPartial {
 
 		return {
 			name: this.name,
-			hiscore: this.hiscore
+			level: this.level,
+			lives: this.lives,
+			score: this.score,
+			gameTime: this.gameTime
 		}
 	}
 }

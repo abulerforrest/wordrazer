@@ -4,6 +4,7 @@
 @import url('https://fonts.googleapis.com/css?family=VT323');
 
 body {
+	overflow: hidden;
 	margin: 0;
 	font-family: "Roboto", sans-serif;
 	-webkit-font-smoothing: antialiased;

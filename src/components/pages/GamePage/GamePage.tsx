@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createRef, Component } from "react";
 import { observer } from "mobx-react";
 
 import injectSheet, { WithSheet } from "react-jss";
@@ -9,8 +9,13 @@ import {
 	IGamePageController
 } from "../../../interfaces/pages/GamePageController";
 
+import { Word } from "../../organisms/Word";
+
 import PlayerStatus from "../../organisms/PlayerStatus/PlayerStatus";
+
 import { PlayerRegistration } from "../../organisms/PlayerRegistration";
+
+import { IThreeJSController } from "../../../interfaces/3Dengine/ThreeJSController";
 
 const styles = (theme: ITheme) => ({
 
@@ -29,11 +34,6 @@ const styles = (theme: ITheme) => ({
 		"100%": {
 			...theme.animations.fadeInBlur.to
 		},
-	},
-
-	"@keyframes scroll": {
-		"0%": { top: "100%", opacity: 1 },
-		"100%": { top: "-100%", opacity: 0 }
 	},
 
 	"@keyframes bgPan": {
@@ -69,9 +69,6 @@ const styles = (theme: ITheme) => ({
 	},
 
 	background: {
-		zIndex: 0,
-		//backgroundImage: "url(/assets/img/bg.jpg)",
-		backgroundRepeat: "no-repeat",
 		backgroundAttachment: "fixed",
 		backgroundPosition: "100% 100%",
 		animation: theme.animations.fadeInBlur.animation
@@ -90,40 +87,21 @@ const styles = (theme: ITheme) => ({
 		display: "flex",
 		flexDirection: "column",
 		justifyContent: "center",
-		animation: "bgPan 08s linear infinite",
 		position: "absolute",
-		bottom: -20,
-		left: 0,
-		backgroundImage: "linear-gradient(rgba(176, 2, 182, 1) .1em, transparent .1em), linear-gradient(90deg, rgba(176, 2, 182, 1) .1em, transparent .1em)",
-		transform: "perspective(200px) rotateX(40deg) scale(2,1) translate3d(0, 0, 0)",
-		backgroundSize: "3em 3em",
 		width: "100%",
-		height: "100vh",
-		animationPlayState: "paused",
-		"-webkitTransformStyle": "preserve-3d",
-		backfaceVisibility: "hidden",
-		"-webkitBackfaceVisibility": "hidden",
-		"-webkitPerspective": 1000,
-		filter: "blur(4px)"
+		height: "100vh"
 	},
 
-	text3D: {
-		opacity: 0,
-			"-webkitTransformOrigin": "50% 120%",
-			transform: "perspective(300px) rotateX(35deg)",
-			flexDirection: "column",
-			alignItems: "center",
-			justifyContent: "center",
-			animationIterationCount: 1,
-			animation: "scroll 20s linear 0s forwards",
-			position: "absolute",
-			top: "50%"
-	},
 	playerRegContainer: {
-		width: 400
+		width: 400,
+		position: "absolute"
 	},
 
 	countDownText: {
+		position: "absolute",
+		transform:"translateX(-50%)",
+		top: "50%",
+		alignItems: "center",
 		filter: "blur(0.4px)",
 		display: "flex",
 		letterSpacing: 1,
@@ -135,6 +113,11 @@ const styles = (theme: ITheme) => ({
 
 	startText: {
 		display: "flex",
+		position: "absolute",
+		transform:"translateX(-90%)",
+		top: "50%",
+		alignItems: "center",
+
 		fontSize: 65,
 		textTransform: "uppercase",
 		color: theme.palette.primaryLight,
@@ -148,15 +131,63 @@ const styles = (theme: ITheme) => ({
 
 export interface IGamePageProps {
 	controller: IGamePageController
+	threeJSController: IThreeJSController
 }
 
 type GamePageProps = IGamePageProps & WithSheet<typeof styles>;
 
 @observer
-class GamePage extends React.Component<GamePageProps> {
+class GamePage extends Component<GamePageProps> {
+
+	private canvasRef: any = createRef<HTMLElement>();
 
 	constructor(props: any) {
 		super(props);
+	}
+
+	componentDidMount() {
+		
+		const { threeJSController } = this.props;
+
+		this.canvasRef.appendChild(
+			threeJSController.renderer.domElement
+		);
+
+		function initEventListeners() {
+			window.addEventListener("resize", onWindowResize);
+		}
+		
+		function onWindowResize() {
+			threeJSController.camera.aspect = window.innerWidth / window.innerHeight;
+			threeJSController.renderer.setSize(window.innerWidth, window.innerHeight);
+			threeJSController.camera.updateProjectionMatrix();
+		}
+
+		threeJSController.loadFont("helvetiker_regular.typeface.json");
+		threeJSController.addWordToScene();
+
+		// 3D canvas options
+		threeJSController.showBackground = true;
+		threeJSController.backgroundURL = "";
+
+		// init 3D canvas
+		threeJSController.setup();
+		initEventListeners();
+
+	}
+
+	private renderWords() : React.ReactNode {
+
+		const { controller, classes } = this.props;	
+
+		if(controller.gameHasStarted && controller.countDownNumber === 0) {
+
+			return (
+				<div>
+					<Word word="word" />
+				</div>
+			);
+		}
 	}
 
 	private renderPlayerRegistration() : React.ReactNode {
@@ -197,9 +228,9 @@ class GamePage extends React.Component<GamePageProps> {
 		const runAnimation = controller.runBackgroundAnim? "running": "paused";
 
 		if(!controller.showPlayerRegistration) {
-
+	
 			return (
-					<div className={classes.gameRoot}>
+					<div>
 						{this.renderCountDownText()}
 						<PlayerStatus controller={controller} />
 						<div className={classes.gameCanvasContainer} style={{animationPlayState: runAnimation}} />
@@ -213,6 +244,7 @@ class GamePage extends React.Component<GamePageProps> {
 
 		const {
 			classes,
+			theme,
 			controller
 		} = this.props;
 
@@ -228,48 +260,17 @@ class GamePage extends React.Component<GamePageProps> {
 		`;
 
 		return (
-			<div className={gameRootClasses}>
-				{this.renderPlayerRegistration()}
+			<div className={gameRootClasses} ref={node => this.canvasRef = node}>
 				{this.renderGamePlayCanvas()}
-
-				{/* <div className={classes.text3D}>
-					<Typography
-						fontSize={50}
-						color={theme.palette.white}
-					>
-						<span>Space</span>
-					</Typography>
-					<Typography
-						margin="50px 0 0 0"
-						fontSize={50}
-						color={theme.palette.white}
-					>
-						<span>Galactica</span>
-					</Typography>
-					<Typography
-						margin="50px 0 0 0"
-						fontSize={50}
-						color={theme.palette.white}
-					>
-						<span>Invaders</span>
-					</Typography>
-					<Typography
-						margin="50px 0 0 0"
-						fontSize={50}
-						color={theme.palette.white}
-					>
-						<span>Martian</span>
-					</Typography>
-					<Typography
-						margin="50px 0 0 0"
-						fontSize={50}
-						color={theme.palette.white}
-					>
-						<span>Trek</span>
-					</Typography>
-				</div> */}
-
+				{this.renderPlayerRegistration()}
 			</div>
+
+			// <div className={gameRootClasses}>
+			// 	{this.renderPlayerRegistration()}
+			// 	{this.renderGamePlayCanvas()}
+			// 	{this.renderWords()}
+
+			// </div>
 		);
 
 	}

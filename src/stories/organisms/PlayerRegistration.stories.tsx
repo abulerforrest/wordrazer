@@ -13,6 +13,7 @@ import { GamePageService } from "../services/GamePageService";
 import { RootStore } from "../../stores/RootStore";
 import { createBrowserHistory } from "history";
 import { Router } from "react-router";
+import { ThreeJSController } from "../../controllers/3Dengine/ThreeJSController";
 
 const services : Partial<IServices> = {
 	gamePageService: new GamePageService()
@@ -22,7 +23,9 @@ const rootStore = new RootStore(services as any);
 
 storiesOf("Organisms", module).add("PlayerRegistration", () => {
 
-const controller = new GamePageController(rootStore);
+const threeJSController = new ThreeJSController();
+
+const controller = new GamePageController(rootStore, threeJSController);
 
 	return (
 		<Router history={createBrowserHistory()}>

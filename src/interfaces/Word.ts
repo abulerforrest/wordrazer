@@ -1,5 +1,4 @@
-import { Identifiable } from "./Identifiable";
-
-export interface IWord extends Identifiable {
+export interface IWord {
+	_id: string
 	word: string
 }

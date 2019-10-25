@@ -6,14 +6,14 @@ import {
 import { Model } from "./Model";
 import { IWord } from "../interfaces/Word";
 
-export type WordsModelPartial = Model<IWord, "word">;
+export type WordsModelPartial = Model<IWord, "_id" | "word">;
 
 export class WordsModel implements WordsModelPartial {
 
-	@observable public id = 0;
+	@observable public _id: string = "";
 	@observable public word: string = "";
 
-	constructor(word?: Partial<IWord>, index?: number) {
+	constructor(word?: Partial<IWord>) {
 		this.fromJson(word!)
 	}
 
@@ -21,7 +21,7 @@ export class WordsModel implements WordsModelPartial {
 	public fromJson(word: Partial<IWord>): void {
 
 		if(word) {
-			this.id = word.id!;
+			this._id = word._id!;
 			this.word = word.word!;
 		}
 
@@ -29,6 +29,7 @@ export class WordsModel implements WordsModelPartial {
 
 	public toJson(): WordsModelPartial {
 		return {
+			_id: this._id,
 			word: this.word
 		}
 	}

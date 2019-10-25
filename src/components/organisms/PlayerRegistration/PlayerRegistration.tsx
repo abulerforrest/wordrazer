@@ -111,7 +111,7 @@ class PlayerRegistration extends React.Component<PlayerRegistrationProps> {
 
 				<Input
 					label="Name"
-					value={controller.viewModel.name}
+					value={controller.viewModel.model.name}
 					placeholder={"________________"}
 					validationText={controller.inputValidated? "Alrighty then, let's go!": controller.textValidateMessage}
 					state={controller.inputState as any}

@@ -1,3 +1,5 @@
+import { IWordController } from "../gamelogic";
+
 export interface IGamePageController {
 	showTimer: boolean
 	gameIsOngoing: boolean
@@ -6,9 +8,10 @@ export interface IGamePageController {
 	runBackgroundAnim: boolean
 	showInputClearIcon: boolean
 	showPlayerRegistration: boolean
-	textInput: string
+	keyInput: string
 	inputState: string
 	gameCurrentTime: string
+	currentTextInput: string;
 	textValidateMessage: string
 	countDownNumber: number
 	viewModel: any
@@ -22,4 +25,6 @@ export interface IGamePageController {
 	toggleBackgroundAnim: () => void
 	onInputKeypress: (value: string) => void
 	onKeyboardInput: (event: KeyboardEvent) => void
+	getWords: IWordController
+	activeWordController: IWordController
 }
