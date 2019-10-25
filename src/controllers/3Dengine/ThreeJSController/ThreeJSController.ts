@@ -194,7 +194,8 @@ export class ThreeJSController
 		  let noise = this.simplex.noise2D(x, y + offset) * this.noiseIntensity; 
 		  vertex.z = noise;
 		}
-	*/	}
+		*/
+		}
 		this.terrain.geometry.verticesNeedUpdate = true;
 		this.terrain.geometry.computeVertexNormals();
 	}
@@ -244,7 +245,7 @@ export class ThreeJSController
 
 	@action
 		public addWordToScene() : void {
-
+/*
 			const word: string = "atari";
 
 			const letterMeshes: THREE.Mesh[] = [];
@@ -276,7 +277,7 @@ export class ThreeJSController
 			this.scene.add(textMesh)
 			offset = offset + 3.2;
 		}
-
+*/
 	}
 
 	@action
@@ -293,7 +294,7 @@ export class ThreeJSController
 
 	},
 		(xhr) => {
-	//		console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+		// console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
 		},
 		(err) => {
 			console.log( 'An error happened: ' + err);
