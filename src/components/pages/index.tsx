@@ -1,2 +1,2 @@
-export * from "./TitlePage";
-export * from "./GamePage";
+export * from './TitlePage';
+export * from './GamePage';

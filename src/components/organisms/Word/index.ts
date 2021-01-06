@@ -1,4 +1,4 @@
-import Word from "./Word";
+import Word from './Word';
 
 export { Word };
-export * from "./Word";
+export * from './Word';

@@ -1,4 +1,4 @@
-import PlayerRegistration from "./PlayerRegistration";
+import PlayerRegistration from './PlayerRegistration';
 
 export { PlayerRegistration };
-export * from "./PlayerRegistration";
+export * from './PlayerRegistration';

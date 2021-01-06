@@ -1,1 +1,1 @@
-export * from "./ThreeJSController";;
+export * from './ThreeJSController';

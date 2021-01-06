@@ -45,13 +45,13 @@ function setupCamera() {
   camera.position.x = 0;
   camera.position.y = -20;
   camera.position.z = 3;
-  
+
   let controls = new THREE.OrbitControls(camera);
 }
 
 function setupRenderer() {
-  renderer = new THREE.WebGLRenderer({ 
-    antialias: true 
+  renderer = new THREE.WebGLRenderer({
+    antialias: true,
   });
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
@@ -74,7 +74,7 @@ function setupPlane() {
 function setupLights() {
   let ambientLight = new THREE.AmbientLight(0x0c0c0c);
   scene.add(ambientLight);
-  
+
   let spotLight = new THREE.SpotLight(0xcccccc);
   spotLight.position.set(-30, 60, 60);
   spotLight.castShadow = true;
@@ -82,7 +82,7 @@ function setupLights() {
 }
 
 function setupEventListeners() {
-  window.addEventListener("resize", onWindowResize);
+  window.addEventListener('resize', onWindowResize);
 }
 
 function onWindowResize() {
@@ -95,7 +95,7 @@ function draw() {
   requestAnimationFrame(draw);
   let offset = Date.now() * 0.0004;
   adjustVertices(offset);
-	adjustCameraPos(offset);
+  adjustCameraPos(offset);
   renderer.render(scene, camera);
 }
 
@@ -104,17 +104,17 @@ function adjustVertices(offset) {
     let vertex = plane.geometry.vertices[i];
     let x = vertex.x / xZoom;
     let y = vertex.y / yZoom;
-    let noise = simplex.noise2D(x, y + offset) * noiseStrength; 
+    let noise = simplex.noise2D(x, y + offset) * noiseStrength;
     vertex.z = noise;
   }
   geometry.verticesNeedUpdate = true;
   geometry.computeVertexNormals();
 }
 
-function adjustCameraPos(offset) {  
+function adjustCameraPos(offset) {
   let x = camera.position.x / xZoom;
   let y = camera.position.y / yZoom;
-  let noise = simplex.noise2D(x, y + offset) * noiseStrength + 1.5; 
+  let noise = simplex.noise2D(x, y + offset) * noiseStrength + 1.5;
   camera.position.z = noise;
 }
 

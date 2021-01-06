@@ -1,2 +1,2 @@
-export * from "./GamePageController";
-export * from "./TitlePageController";
+export * from './GamePageController';
+export * from './TitlePageController';

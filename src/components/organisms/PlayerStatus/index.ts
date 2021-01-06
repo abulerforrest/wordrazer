@@ -1,4 +1,4 @@
-import PlayerStatus from "./PlayerStatus";
+import PlayerStatus from './PlayerStatus';
 
 export { PlayerStatus };
-export * from "./PlayerStatus";
+export * from './PlayerStatus';

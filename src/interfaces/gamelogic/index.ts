@@ -1,1 +1,1 @@
-export * from "./WordController";
+export * from './WordController';

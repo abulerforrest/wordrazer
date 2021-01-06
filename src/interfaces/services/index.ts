@@ -1,2 +1,2 @@
-export * from "./GamePageService";
-export * from "./TitlePageService";
+export * from './GamePageService';
+export * from './TitlePageService';

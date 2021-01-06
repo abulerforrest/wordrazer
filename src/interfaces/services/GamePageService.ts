@@ -1,5 +1,5 @@
-import { IWord } from "../Word";
+import { IWord } from '../Word';
 
 export interface IGamePageService {
-	fetchWordsFromApi(count: number): Promise<IWord[]>
-};
+  fetchWordsFromApi(count: number): Promise<IWord[]>;
+}

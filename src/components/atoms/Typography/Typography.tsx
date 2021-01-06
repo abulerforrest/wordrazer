@@ -1,145 +1,145 @@
-import * as React from "react";
-import { observer } from "mobx-react";
+import * as React from 'react';
+import { observer } from 'mobx-react';
 
-import injectSheet, { WithSheet } from "react-jss";
+import injectSheet, { WithSheet } from 'react-jss';
 
-import {
-	ColorProperty,
-	TextTransformProperty
-} from "csstype";
+import * as CSS from 'csstype';
 
-import { ITheme } from "../../../interfaces/Theme";
+import { ITheme } from '../../../interfaces/Theme';
 
 import {
-	ComponentColor,
-	ComponentMargin,
-	ComponentLetterSpacing
-} from "../../../interfaces/Component";
+  ComponentColor,
+  ComponentMargin,
+  ComponentLetterSpacing,
+} from '../../../interfaces/Component';
 
-export type TypographyType = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p";
+export type TypographyType = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p';
 
 export interface ITypographyProps {
-	children: React.ReactNode
+  children: React.ReactNode;
 
-	bold?: boolean
-	noWrap?: boolean
-	uppercase?: boolean
+  bold?: boolean;
+  noWrap?: boolean;
+  uppercase?: boolean;
 
-	fontSize?: number
+  fontSize?: number;
 
-	className: string
-	type?: TypographyType
+  className: string;
+  type?: TypographyType;
 
-	color?: ComponentColor
-	margin?: ComponentMargin
+  color?: ComponentColor;
+  margin?: ComponentMargin;
 
-	noSelect?: boolean
+  noSelect?: boolean;
 
-	letterSpacing?: ComponentLetterSpacing
+  letterSpacing?: ComponentLetterSpacing;
 
-	onClick?: (event: React.MouseEvent<HTMLElement>) => void
+  onClick?: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
 const styles = (theme: ITheme) => ({
-	root: {
-		fontFamily: theme.typography.primary,
-		display: "block"
-	},
+  root: {
+    fontFamily: theme.typography.primary,
+    display: 'block',
+  },
 
-	noWrap: {
-		overflow: "hidden",
-		whiteSpace: "nowrap",
-		textOverflow: "ellipsis"
-	},
+  noWrap: {
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+  },
 
-	bold: {
-		fontWeight: "bold"
-	},
-	
-	noSelect: {
-		userSelect: "none"
-	}
+  bold: {
+    fontWeight: 'bold',
+  },
+
+  noSelect: {
+    userSelect: 'none',
+  },
 });
 
 interface ITypographyStyles {
-	fontSize?: number
-	color?: ColorProperty
-	margin?: ComponentMargin
-	textTransform?: TextTransformProperty
-	letterSpacing?: ComponentLetterSpacing
+  fontSize?: number;
+  color?: CSS.Property.Color;
+  margin?: ComponentMargin;
+  textTransform?: CSS.Property.TextTransform;
+  letterSpacing?: ComponentLetterSpacing;
 }
 
 type TypographyProps = ITypographyProps & WithSheet<typeof styles>;
 
 @observer
 class Typography extends React.Component<TypographyProps> {
+  public static defaultProps: Partial<ITypographyProps> = {
+    margin: 0,
+    noWrap: false,
+    type: 'p',
+    bold: false,
+    className: '',
+    noSelect: false,
+    letterSpacing: '',
+    uppercase: false,
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    onClick: () => {},
+  };
 
-	public static defaultProps: Partial<ITypographyProps> = {
-		margin: 0,
-		noWrap: false,
-		type: "p",
-		bold: false,
-		className: "",
-		noSelect: false,
-		letterSpacing: "",
-		uppercase: false,
-		onClick: () => {}
-	}
+  render(): React.ReactNode {
+    const {
+      type,
+      bold,
+      color,
+      theme,
+      margin,
+      noWrap,
+      classes,
+      onClick,
+      noSelect,
+      fontSize,
+      children,
+      className,
+      uppercase,
+      letterSpacing,
+    } = this.props;
 
-	render() : React.ReactNode {
+    const style: ITypographyStyles = {
+      margin,
+      fontSize,
+      color: theme.palette.blackPrimary,
+    };
 
-		const {
-			type,
-			bold,
-			color,
-			theme,
-			margin,
-			noWrap,
-			classes,
-			onClick,
-			noSelect,
-			fontSize,
-			children,
-			className,
-			uppercase,
-			letterSpacing
-		} = this.props;
+    const hasWeight = bold ? classes.bold : '';
+    const hasWrap = noWrap ? classes.noWrap : '';
+    const hasNoSelect = noSelect ? classes.noSelect : '';
 
-		const style: ITypographyStyles = {
-			margin,
-			fontSize,
-			color: theme.palette.blackPrimary
-		};
+    const componentClassName = `${classes.root} ${className} ${hasWeight} ${hasWrap} ${hasNoSelect}`;
 
-		const hasWeight = bold ? classes.bold : "";
-		const hasWrap = noWrap ? classes.noWrap : "";
-		const hasNoSelect = noSelect ? classes.noSelect : "";
+    if (fontSize !== null && fontSize !== undefined) {
+      style.fontSize = fontSize;
+    }
 
-		const componentClassName = `${classes.root} ${className} ${hasWeight} ${hasWrap} ${hasNoSelect}`;
+    if (color !== null && color !== undefined) {
+      style.color = color;
+    }
 
-		if(fontSize !== null && fontSize !== undefined) {
-			style.fontSize = fontSize;
-		}
+    if (letterSpacing !== null && letterSpacing !== undefined) {
+      style.letterSpacing = letterSpacing;
+    }
 
-		if(color !== null && color !== undefined) {
-			style.color = color;
-		}
+    if (uppercase) {
+      style.textTransform = 'uppercase';
+    }
 
-		if(letterSpacing !== null && letterSpacing !== undefined) {
-			style.letterSpacing = letterSpacing;
-		}
-
-		if(uppercase) {
-			style.textTransform = "uppercase";
-		}
-
-		return React.createElement(type as string, {
-			className: componentClassName,
-			onClick,
-			style,
-			"data-testid": "typography"
-		}, children);
-	}
+    return React.createElement(
+      type as string,
+      {
+        className: componentClassName,
+        onClick,
+        style,
+        'data-testid': 'typography',
+      },
+      children,
+    );
+  }
 }
 
 export default injectSheet(styles)(Typography);

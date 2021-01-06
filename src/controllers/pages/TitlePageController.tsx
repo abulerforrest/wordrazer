@@ -1,41 +1,32 @@
-import { observable } from "mobx";
+import { observable } from 'mobx';
 
-import { RootStore } from "../../stores/RootStore";
-import { GamePageStore } from "../../stores/GamePageStore";
+import { RootStore } from '../../stores/RootStore';
+import { GamePageStore } from '../../stores/GamePageStore';
 
-import {
-	ITitlePageController
-} from "../../interfaces/pages/TitlePageController";
+import { ITitlePageController } from '../../interfaces/pages';
 
-export class TitlePageController
-	implements ITitlePageController {
+export class TitlePageController implements ITitlePageController {
+  private readonly rootStore: RootStore;
+  private readonly store: GamePageStore;
 
-	private readonly rootStore: RootStore;
-	private readonly store: GamePageStore;
+  @observable public loading = false;
 
-	@observable public loading: boolean = false;
+  constructor(rootStore: RootStore) {
+    this.rootStore = rootStore;
 
-	constructor(rootStore: RootStore) {
-		this.rootStore = rootStore;
+    this.store = rootStore.gamePageStore;
 
-		this.store = rootStore.gamePageStore;
+    this.load();
+  }
 
-		this.load();
-	}
+  private async load(): Promise<void> {
+    this.loading = true;
 
-	private async load() : Promise<void> {
-		this.loading = true;
-
-		try {
-
-
-		}
-		catch(error) {
-
-		}
-		finally {
-			this.loading = false;
-		}
-	}
-
+    try {
+      // eslint-disable-next-line no-empty
+    } catch (error) {
+    } finally {
+      this.loading = false;
+    }
+  }
 }

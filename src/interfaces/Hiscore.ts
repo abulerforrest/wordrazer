@@ -1,5 +1,5 @@
-import { Identifiable } from "./Identifiable";
+import { Identifiable } from './Identifiable';
 
 export interface IHiscore extends Identifiable {
-	rank: number
+  rank: number;
 }

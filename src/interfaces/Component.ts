@@ -1,13 +1,8 @@
-import {
-	WidthProperty, 
-	HeightProperty, 
-	MarginProperty,
-	LetterSpacingProperty
-} from "csstype";
+import * as CSS from 'csstype';
 
-export type ComponentColor = string
-export type ComponentSize = "small" | "medium" | "large";
-export type ComponentHeight = HeightProperty<number>
-export type ComponentWidth = WidthProperty<number>
-export type ComponentMargin = MarginProperty<number>
-export type ComponentLetterSpacing = LetterSpacingProperty<string>
+export type ComponentColor = string;
+export type ComponentSize = 'small' | 'medium' | 'large';
+export type ComponentHeight = CSS.Property.Height<number>;
+export type ComponentWidth = CSS.Property.Width<number>;
+export type ComponentMargin = CSS.Property.Margin<number>;
+export type ComponentLetterSpacing = CSS.Property.LetterSpacing<string>;

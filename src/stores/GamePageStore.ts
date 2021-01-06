@@ -1,39 +1,31 @@
-import { RootStore } from "./RootStore";
-import { observable, ObservableMap, action } from "mobx";
-import { WordsModel } from "../models/WordsModel";
-import { IWord } from "../interfaces/Word";
-import { workerData } from "worker_threads";
+import { RootStore } from './RootStore';
+import { observable, ObservableMap, action } from 'mobx';
+import { WordsModel } from '../models/WordsModel';
+import { IWord } from '../interfaces/Word';
 
-type WordsMap = ObservableMap<IWord, WordsModel>
+type WordsMap = ObservableMap<IWord, WordsModel>;
 
 export class GamePageStore {
+  private readonly rootStore: RootStore;
+  private readonly words: WordsMap = observable.map();
 
-	private readonly rootStore: RootStore;
-	private readonly words: WordsMap = observable.map();
+  constructor(rootStore: RootStore) {
+    this.rootStore = rootStore;
+  }
 
-	constructor(rootStore: RootStore) {
-		this.rootStore = rootStore;
-	}
+  @action
+  public async fetchWordsFromApi(count: number): Promise<void> {
+    const words: any[] = await this.rootStore.services.gamePageService.fetchWordsFromApi(count);
 
-	@action
-	public async fetchWordsFromApi(count: number) : Promise<void> {
+    for (const word in words) {
+      const wordsModel = new WordsModel(words[word]);
 
-		const words: any[] = await this.rootStore.services
-		.gamePageService.fetchWordsFromApi(count);
+      this.words.set(words[word], wordsModel);
+    }
+  }
 
-		for(const word in words) {
-
-			const wordsModel = new WordsModel(words[word]);
-			
-			this.words.set(words[word], wordsModel);
-
-		}
-	}
-
-	@action
-	public getWords() : IterableIterator<WordsModel> {
-		return this.words.values();
-	}
-
-
+  @action
+  public getWords(): IterableIterator<WordsModel> {
+    return this.words.values();
+  }
 }

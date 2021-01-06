@@ -1,5 +1,5 @@
-import { IHiscore } from "../Hiscore";
+import { IHiscore } from '../Hiscore';
 
 export interface ITitlePageService {
-	getUserPlayData: () => Promise<IHiscore[]>
-};
+  getUserPlayData: () => Promise<IHiscore[]>;
+}

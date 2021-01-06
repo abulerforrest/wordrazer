@@ -1,4 +1,4 @@
-import Hiscore from "./Hiscore";
+import Hiscore from './Hiscore';
 
 export { Hiscore };
-export * from "./Hiscore";
+export * from './Hiscore';

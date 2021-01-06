@@ -1,4 +1,4 @@
-import GameTimer from "./GameTimer";
+import GameTimer from './GameTimer';
 
-export * from "./GameTimer";
+export * from './GameTimer';
 export { GameTimer };

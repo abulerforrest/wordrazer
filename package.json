@@ -1,7 +1,7 @@
 {
   "name": "wordrazer-project",
   "author": "Alexander Bulér Forrest <alexander@buler-forrest.se> (http://alexdev.se)",
-  "homepage": "http://alexdev.se/projects/wordrazer",
+  "homepage": "https://wordrazer.alexdev.se",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
@@ -14,17 +14,16 @@
     "@types/storybook__addon-knobs": "^5.0.3",
     "@types/storybook__react": "^4.0.2",
     "merge-class-names": "^1.2.0",
-    "mobx": "^5.13.0",
-    "mobx-react": "^6.1.3",
-    "mobx-utils": "^5.4.1",
+    "mobx": "^5.15.7",
+    "mobx-react": "^6.3.1",
+    "mobx-utils": "^5.6.1",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-jss": "^8.6.1",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "3.1.1",
+    "react-scripts": "^4.0.1",
     "simplex-noise": "^2.4.0",
-    "three": "^0.108.0",
-    "typescript": "^3.6.2"
+    "three": "^0.124.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -32,11 +31,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public",
-    "build-storybook": "build-storybook -s public",
-    "lint": "eslint --ext .ts --ext .tsx src/components"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
+    "build-storybook": "build-storybook -s public"
   },
   "browserslist": {
     "production": [
@@ -54,13 +49,13 @@
     "@storybook/addon-knobs": "^5.1.11",
     "@storybook/react": "^5.1.11",
     "@types/webpack-env": "^1.14.0",
-    "@typescript-eslint/eslint-plugin": "^2.1.0",
-    "@typescript-eslint/parser": "^2.1.0",
-    "eslint": "^6.3.0",
-    "eslint-config-airbnb": "^18.0.1",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.14.3",
-    "eslint-plugin-react-hooks": "^1.7.0"
+    "@typescript-eslint/eslint-plugin": "^4.11.1",
+    "@typescript-eslint/parser": "^4.11.1",
+    "eslint": "^7.17.0",
+    "eslint-config-prettier": "^7.1.0",
+    "eslint-plugin-prettier": "^3.3.0",
+    "eslint-plugin-react": "^7.22.0",
+    "prettier": "2.2.1",
+    "typescript": "^4.1.3"
   }
 }
