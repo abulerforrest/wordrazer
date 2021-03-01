@@ -23,7 +23,7 @@
     "react-router-dom": "^5.0.1",
     "react-scripts": "^4.0.1",
     "simplex-noise": "^2.4.0",
-    "three": "^0.124.0"
+    "three": "^0.125.0"
   },
   "scripts": {
     "start": "react-scripts start",
